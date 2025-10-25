@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xeneize Monedas y Billetes</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      background: linear-gradient(180deg, #0033a0 0%, #f4d03f 100%);
+      color: #fff;
+    }
+    header {
+      background: #002868;
+      color: #f4d03f;
+      text-align: center;
+      padding: 1rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    main {
+      padding: 1rem;
+      max-width: 700px;
+      margin: auto;
+    }
+    form {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    input, button {
+      padding: 0.6rem;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+    }
+    input[type="file"] {
+      background: none;
+      color: #fff;
+    }
+    button {
+      background-color: #f4d03f;
+      color: #002868;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #fff;
+      color: #002868;
+    }
+    .productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+    .producto {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    .producto img {
+      width: 100%;
+      border-radius: 8px;
+      height: 100px;
+      object-fit: cover;
+    }
+    .producto h3 {
+      margin: 5px 0 0;
+      font-size: 1rem;
+    }
+    .producto p {
+      margin: 2px 0;
+      font-size: 0.9rem;
+    }
+    .producto button {
+      margin-top: 5px;
+      background: #002868;
+      color: #f4d03f;
+      border: none;
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .producto button:hover {
+      background: #f4d03f;
+      color: #002868;
+    }
+    /* WhatsApp button */
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25d366;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      text-decoration: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+    }
+    .whatsapp-btn:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <header>💙 Xeneize Monedas y Billetes 💛</header>
+  <main>
+    <form id="formulario">
+      <label>Foto del billete o moneda:</label>
+      <input type="file" id="imagen" accept="image/*" required />
+
+      <input type="text" id="nombre" placeholder="Nombre del billete o moneda" required />
+      <input type="text" id="pais" placeholder="País" required />
+      <input type="text" id="anio" placeholder="Año" required />
+      <input type="number" id="precio" placeholder="Precio" required />
+
+      <button type="submit">Agregar producto</button>
+    </form>
+
+    <div class="productos" id="listaProductos"></div>
+  </main>
+
+  <!-- Botón de WhatsApp -->
+  <a class="whatsapp-btn" href="https://wa.me/5491166152067" target="_blank">💬</a>
+
+  <script>
+    const formulario = document.getElementById('formulario');
+    const lista = document.getElementById('listaProductos');
+
+    // Cargar productos guardados
+    const productos = JSON.parse(localStorage.getItem('productos')) || [];
+    renderProductos();
+
+    formulario.addEventListener('submit', e => {
+      e.preventDefault();
+      const file = document.getElementById('imagen').files[0];
+      const reader = new FileReader();
+      reader.onload = function() {
+        const nuevo = {
+          id: Date.now(),
+          nombre: document.getElementById('nombre').value,
+          pais: document.getElementById('pais').value,
+          anio: document.getElementById('anio').value,
+          precio: document.getElem
